@@ -1,0 +1,17 @@
+resource "aws_placement_group" "smy_pg" {
+  name = "smy-pg"
+  strategy = "cluster"
+}
+
+resource "aws_autoscaling_group" "smy_atsg" {
+  name = "smy-atsg"
+  min_size = 2
+  max_size = 10
+  health_check_grace_period = 60
+  health_check_type = "EC2"
+  desired_capacity = 2
+  force_delete = true
+  launch_configuration = aws_launch_configuration.smy_lacf.name
+  vpc_zone_identifier = [aws_subnet.smy_puba.id,aws_subnet.smy_pubc.id]
+ # placement_group = aws_placement_group.smy_pg.id
+}
