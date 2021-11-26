@@ -22,6 +22,7 @@ resource "aws_instance" "smy_web" {
   availability_zone = "ap-northeast-2a"
   private_ip = "10.0.0.11"
   subnet_id = aws_subnet.smy_puba.id
+  user_data = file("./install.sh")
 
   tags = {
     "Name" = "smy-web"
